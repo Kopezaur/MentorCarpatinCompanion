@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 
+def GOOGLE_MAPS_API_KEY = '"' + GoogleMapsApiKey + '"' ?: '"GMaps Api Key not configured properly!"'
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -9,6 +11,13 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        each { type ->
+            type.buildConfigField "String", 'GoogleMapsApiKey', GOOGLE_MAPS_API_KEY
+        }
+        manifestPlaceholders = [ // this is used for defining the variable for manifest file
+            GOOGLE_MAPS_API_KEY: GoogleMapsApiKey
+        ]
     }
     buildTypes {
         release {
